@@ -23,7 +23,17 @@ var (
 	interval     time.Duration
 	intMap       = map[string]time.Duration{}
 	csvOut       *csv.Writer
+	headers      []string
 )
+
+func getIndex(value string, slice []string) int {
+	for i, v := range slice {
+		if v == value {
+			return i
+		}
+	}
+	return -1
+}
 
 // execution starts here...
 func main() {
@@ -149,7 +159,7 @@ func main() {
 		}
 
 		if initialize {
-			headers := []string{"date"}
+			headers = []string{"date"}
 			for _, data := range details {
 				headers = append(headers, *data.Scope)
 			}
@@ -159,16 +169,17 @@ func main() {
 		// loop through query results
 		tmpOut := make([][]string, len(details[0].Points))
 		for d, data := range details {
-
+			colIndex := getIndex(*data.Scope, headers)
+			if colIndex == -1 {
+				colIndex = d + 1 // if we can't match the header string, fall back to assuming consistent ordering
+				log.Println("Falling back to index order for scope:", *data.Scope)
+			}
 			for i, point := range data.Points {
 				if d == 0 { // initialize the csv row
-					tmpOut[i] = []string{
-						time.Unix(int64(*point[0])/1000, 0).Format(outputFormat),
-						fmt.Sprintf("%f", *point[1]),
-					}
-				} else { // two dimensional data, so append to the csv row
-					tmpOut[i] = append(tmpOut[i], fmt.Sprintf("%f", *point[1]))
+					tmpOut[i] = make([]string, len(details)+1)
+					tmpOut[i][0] = time.Unix(int64(*point[0])/1000, 0).Format(outputFormat)
 				}
+				tmpOut[i][colIndex] = fmt.Sprintf("%f", *point[1])
 			}
 		}
 		csvOut.WriteAll(tmpOut)
