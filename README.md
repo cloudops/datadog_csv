@@ -13,15 +13,15 @@ The binary can be run from anywhere on your filesystem.  I would recommend renam
 
 USAGE
 -----
-`datadog_csv` leverages the DataDog API.  In order to use the API, you will need both an `api_key` and an `app_key`, which you can get at [https://app.datadoghq.com/account/settings#api](https://app.datadoghq.com/account/settings#api).
+`datadog_csv` leverages the DataDog API.  In order to use the API, you will need both an `api_key` and an `app_key`, which you can get from [https://app.datadoghq.com/account/settings#api](https://app.datadoghq.com/account/settings#api).
 
 
 There are a few ways to specify configuration details when running the `datadog_csv` binary.
 
-1. Pass the params on the command line.
+1. Pass the params on the command line.  
 `$ ./datadog_csv -api_key="xyz" -app_key="qrs"`
 
-2. Populate a `config.ini` file and pass the filepath on the command line.
+2. Populate a `config.ini` file and pass the filepath on the command line.  
 `$ ./datadog_csv -config="config.ini"`
 
 With the `config.ini` file in the format of:
@@ -30,17 +30,17 @@ api_key = xyz
 app_key = qrs
 ```
 
-*Note: `-api_key` and `-app_key` are private, so you may not want to enter them on the command line or store them in a config file.  In this case, if you do not specify these options with either of the above methods, the application will prompt you for these details once launched and your input will be masked.*
+*Note: `-api_key` and `-app_key` are private, so you may not want to enter them on the command line or store them in a config file.  In this case, if you do not specify these options via either of the above methods, the application will prompt you for these details once launched and your input will be masked.*
 ```
 $ ./datadog_csv -config="config.ini"
 Enter your API_KEY:
 Enter your APP_KEY:
 ```
 
-**RECOMMENDED USAGE**
-`$ ./datadog_csv -config="system_cpu_idle.ini" -csv_file="system_cpu_idle.csv"`
+**RECOMMENDED USAGE**  
+**`$ ./datadog_csv -config="system_cpu_idle.ini" -csv_file="system_cpu_idle.csv"`**
 
-`system_cpu_idle.ini`
+**`system_cpu_idle.ini`**
 ```
 api_key = xyz
 app_key = qrs
@@ -87,7 +87,7 @@ Unfortunately, this down sampling of the data over longer periods of time does n
 
 To hopefully clarify these details a bit more, I have attached the log output of a single query which is produced by calling 3 separate sub-queries.
 
-`datadog_csv.log`
+**`datadog_csv.log`**
 ```
 2018/11/08 23:11:00 Connecting to DataDog...
 2018/11/08 23:11:00 Requested date range: 2018/10/01-00:00 to 2018/11/01-00:00
