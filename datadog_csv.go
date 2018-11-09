@@ -101,7 +101,7 @@ func main() {
 	duration := endTime.Sub(startTime)
 	startTime = endTime.Add(-time.Duration(math.Ceil(duration.Hours()/interval.Hours())) * interval)
 
-	// ask for apiKey and app_key if not specified
+	// ask for -api_key and -app_key if not specified
 	if *apiKey == "" {
 		apiK, err := speakeasy.Ask("Enter your API_KEY: ")
 		if err != nil {
@@ -121,7 +121,7 @@ func main() {
 	_ = os.Remove("datadog_csv.log") // start by deleting the log file...
 	logFile, err := os.OpenFile("datadog_csv.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("error opening file: %v", err)
+		log.Fatalf("Error opening file: %v", err)
 	}
 	defer logFile.Close()
 	log.SetOutput(logFile)
@@ -129,17 +129,17 @@ func main() {
 	// lets get working...
 	log.Println("Connecting to DataDog...")
 
-	// setup a connect to DataDog
+	// setup a connection to DataDog
 	client := datadog.NewClient(*apiKey, *appKey)
 
 	log.Printf("Requested date range: %s to %s", *rangeStart, *rangeEnd)
 	log.Printf("Querying date range: %s to %s", startTime.Format(inputFormat), endTime.Format(inputFormat))
 
-	// setup the output
+	// setup the output target
 	if *csvFilepath == "" {
 		csvOut = csv.NewWriter(os.Stdout)
 	} else {
-		_ = os.Remove(*csvFilepath) // start by deleting the log file...
+		_ = os.Remove(*csvFilepath) // start by deleting the output file...
 		csvFile, err := os.OpenFile(*csvFilepath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatal(err)
