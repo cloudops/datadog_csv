@@ -32,7 +32,7 @@ func main() {
 	query := flag.String("query", "", "The DataDog query to run (required)")
 	rangeStart := flag.String("start", "", "The starting point for the date range to query (format: yyyy/mm/dd-hh:mm) (required)")
 	rangeEnd := flag.String("end", "", "The ending point for the date range to query (format: yyyy/mm/dd-hh:mm) (required)")
-	intStr := flag.String("interval", "1h", "The perferred data interval. [5m, 10m, 20m, 30m, 1h, 2h, 4h, 8h, 12h, 24h]")
+	intStr := flag.String("interval", "1h", "The preferred data interval. [5m, 10m, 20m, 30m, 1h, 2h, 4h, 8h, 12h, 24h]")
 	csvFilepath := flag.String("csv_file", "", "The filepath of the CSV file to output to")
 	version := flag.Bool("v", false, "Version of the binary (optional)")
 	iniflags.Parse()
@@ -141,7 +141,7 @@ func main() {
 	tmpTime := startTime
 	initialize := true // only write the headers on the first set of queries
 	for tmpTime.Before(endTime) {
-		log.Printf("Querying '%s' from '%s' to '%s'...\n", *query, tmpTime.String(), tmpTime.Add(interval))
+		log.Printf("Querying '%s' from '%s' to '%s'...\n", *query, tmpTime.Format(inputFormat), tmpTime.Add(interval).Format(inputFormat))
 		details, err := client.QueryMetrics(tmpTime.Unix(), tmpTime.Add(interval).Unix(), *query)
 		if err != nil {
 			log.Println("Failed to query DataDog metrics")
