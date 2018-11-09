@@ -177,9 +177,9 @@ func main() {
 			for i, point := range data.Points {
 				if d == 0 { // initialize the csv row
 					tmpOut[i] = make([]string, len(details)+1)
-					tmpOut[i][0] = time.Unix(int64(*point[0])/1000, 0).Format(outputFormat)
+					tmpOut[i][0] = time.Unix(int64(*point[0])/1000, 0).Format(outputFormat) // initialize the date column
 				}
-				tmpOut[i][colIndex] = fmt.Sprintf("%f", *point[1])
+				tmpOut[i][colIndex] = fmt.Sprintf("%f", *point[1]) // add the data to the correct column
 			}
 		}
 		csvOut.WriteAll(tmpOut)
