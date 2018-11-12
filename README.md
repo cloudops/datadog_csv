@@ -38,7 +38,7 @@ Enter your APP_KEY:
 ```
 
 **RECOMMENDED USAGE**  
-**`$ ./datadog_csv -config="system_cpu_idle.ini" -csv_file="system_cpu_idle.csv"`**
+**`$ ./datadog_csv -config="system_cpu_idle.ini"`**
 
 **`system_cpu_idle.ini`**
 ```
@@ -47,6 +47,7 @@ app_key = qrs
 query = avg:system.cpu.idle{logs}
 start = 2018/10/01-00:00
 end = 2018/11/01-00:00
+csv_file = system_cpu_idle.csv
 ```
 
 
